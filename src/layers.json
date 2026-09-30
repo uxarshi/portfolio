@@ -1,0 +1,336 @@
+{
+ "size": [
+  1492,
+  1054
+ ],
+ "focus": [
+  900,
+  690
+ ],
+ "bubble": [
+  934,
+  510,
+  156,
+  102
+ ],
+ "girlDepth": 0.5,
+ "depthMap": "layers/depth.webp",
+ "farLampHeads": [
+  [
+   1008,
+   712
+  ],
+  [
+   980,
+   733
+  ],
+  [
+   966,
+   741
+  ]
+ ],
+ "layers": [
+  {
+   "name": "sky",
+   "file": "layers/sky.webp",
+   "rect": [
+    0,
+    0,
+    1492,
+    1054
+   ],
+   "depth": 0.0,
+   "kind": "sky"
+  },
+  {
+   "name": "city",
+   "file": "layers/city.webp",
+   "rect": [
+    0,
+    587,
+    1492,
+    467
+   ],
+   "depth": 0.03,
+   "kind": "city",
+   "river": [
+    0,
+    742,
+    860,
+    90
+   ],
+   "waterMask": "layers/water.webp"
+  },
+  {
+   "name": "balloon-1",
+   "file": "layers/balloon-1.webp",
+   "rect": [
+    330,
+    128,
+    107,
+    133
+   ],
+   "depth": 0.07,
+   "kind": "balloon"
+  },
+  {
+   "name": "balloon-2",
+   "file": "layers/balloon-2.webp",
+   "rect": [
+    1008,
+    165,
+    48,
+    61
+   ],
+   "depth": 0.06,
+   "kind": "balloon"
+  },
+  {
+   "name": "balloon-3",
+   "file": "layers/balloon-3.webp",
+   "rect": [
+    1099,
+    270,
+    51,
+    67
+   ],
+   "depth": 0.05,
+   "kind": "balloon"
+  },
+  {
+   "name": "balloon-4",
+   "file": "layers/balloon-4.webp",
+   "rect": [
+    1098,
+    474,
+    49,
+    64
+   ],
+   "depth": 0.04,
+   "kind": "balloon"
+  },
+  {
+   "name": "bird-1",
+   "file": "layers/bird-1.webp",
+   "rect": [
+    473,
+    279,
+    51,
+    37
+   ],
+   "depth": 0.09,
+   "kind": "bird"
+  },
+  {
+   "name": "bird-2",
+   "file": "layers/bird-2.webp",
+   "rect": [
+    553,
+    314,
+    54,
+    34
+   ],
+   "depth": 0.09,
+   "kind": "bird"
+  },
+  {
+   "name": "bird-3",
+   "file": "layers/bird-3.webp",
+   "rect": [
+    656,
+    354,
+    51,
+    33
+   ],
+   "depth": 0.09,
+   "kind": "bird"
+  },
+  {
+   "name": "bird-4",
+   "file": "layers/bird-4.webp",
+   "rect": [
+    756,
+    385,
+    47,
+    27
+   ],
+   "depth": 0.09,
+   "kind": "bird"
+  },
+  {
+   "name": "bird-5",
+   "file": "layers/bird-5.webp",
+   "rect": [
+    818,
+    400,
+    38,
+    23
+   ],
+   "depth": 0.09,
+   "kind": "bird"
+  },
+  {
+   "name": "trees",
+   "file": "layers/trees.webp",
+   "rect": [
+    839,
+    184,
+    653,
+    768
+   ],
+   "depth": "map",
+   "kind": "trees",
+   "swayMap": "layers/sway.webp"
+  },
+  {
+   "name": "path",
+   "file": "layers/path.webp",
+   "rect": [
+    0,
+    634,
+    1492,
+    420
+   ],
+   "depth": "map",
+   "kind": "path"
+  },
+  {
+   "name": "lamp-1",
+   "file": "layers/lamp-1.webp",
+   "rect": [
+    1343,
+    452,
+    84,
+    476
+   ],
+   "depth": 0.5895,
+   "kind": "lamp",
+   "head": [
+    1380,
+    505
+   ]
+  },
+  {
+   "name": "lamp-2",
+   "file": "layers/lamp-2.webp",
+   "rect": [
+    1146,
+    574,
+    50,
+    287
+   ],
+   "depth": 0.3069,
+   "kind": "lamp",
+   "head": [
+    1172,
+    610
+   ]
+  },
+  {
+   "name": "lamp-3",
+   "file": "layers/lamp-3.webp",
+   "rect": [
+    1048,
+    657,
+    35,
+    167
+   ],
+   "depth": 0.2041,
+   "kind": "lamp",
+   "head": [
+    1066,
+    680
+   ]
+  },
+  {
+   "name": "bench-1",
+   "file": "layers/bench-1.webp",
+   "rect": [
+    1195,
+    784,
+    168,
+    132
+   ],
+   "depth": 0.4764,
+   "kind": "bench"
+  },
+  {
+   "name": "bench-2",
+   "file": "layers/bench-2.webp",
+   "rect": [
+    1074,
+    773,
+    94,
+    73
+   ],
+   "depth": 0.2654,
+   "kind": "bench"
+  },
+  {
+   "name": "cat-orange",
+   "file": "layers/cat-orange.webp",
+   "rect": [
+    533,
+    851,
+    95,
+    110
+   ],
+   "depth": 0.6055,
+   "kind": "cat",
+   "tail": [
+    551,
+    903,
+    543,
+    855
+   ]
+  },
+  {
+   "name": "cat-grey",
+   "file": "layers/cat-grey.webp",
+   "rect": [
+    1000,
+    824,
+    99,
+    74
+   ],
+   "depth": 0.3949,
+   "kind": "cat",
+   "tail": [
+    1078.2,
+    853.7,
+    1081.9,
+    831.4
+   ]
+  },
+  {
+   "name": "cat-white",
+   "file": "layers/cat-white.webp",
+   "rect": [
+    1297,
+    864,
+    100,
+    80
+   ],
+   "depth": 0.5775,
+   "kind": "cat",
+   "tail": [
+    1358,
+    931,
+    1391,
+    936
+   ]
+  },
+  {
+   "name": "girl",
+   "file": "layers/girl.webp",
+   "rect": [
+    792,
+    553,
+    195,
+    377
+   ],
+   "depth": 0.5,
+   "kind": "girl"
+  }
+ ]
+}

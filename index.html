@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>%TITLE%</title>
+    <meta name="description" content="%DESCRIPTION%" />
+    <meta name="author" content="%NAME%" />
+    <meta name="theme-color" content="%THEME%" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="%TITLE%" />
+    <meta property="og:description" content="%DESCRIPTION%" />
+    <meta property="og:url" content="%URL%" />
+    <meta property="og:image" content="%OG_IMAGE%" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A girl on a riverside promenade at sunset, looking up at a thought bubble" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="%TITLE%" />
+    <meta name="twitter:description" content="%DESCRIPTION%" />
+    <meta name="twitter:image" content="%OG_IMAGE%" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" as="image" href="/scene/scene.webp" fetchpriority="high" />
+  </head>
+  <body>
+    <h1 class="sr-only">%NAME%, %TAGLINE%. Portfolio coming soon.</h1>
+
+    <main id="stage" aria-label="Illustrated scene">
+      <img
+        id="still"
+        src="/scene/scene.webp"
+        alt="A soft pastel painting: a girl in a white dress and blue-grey hijab stands on a riverside promenade at sunset, looking up at a thought bubble, with hot-air balloons, birds, falling leaves, trees, street lamps, benches and three cats."
+        fetchpriority="high"
+        decoding="async"
+      />
+
+      <div id="bubble" role="status" aria-live="polite">
+        <svg class="bubble-cloud" viewBox="0 0 300 190" aria-hidden="true" focusable="false">
+          <g class="cloud-line">
+            <circle cx="78" cy="112" r="46" /><circle cx="118" cy="72" r="50" /><circle cx="180" cy="66" r="52" />
+            <circle cx="228" cy="104" r="44" /><circle cx="196" cy="136" r="40" /><circle cx="128" cy="140" r="42" />
+            <circle cx="60" cy="140" r="26" /><circle cx="250" cy="138" r="26" />
+          </g>
+          <g class="cloud-fill">
+            <circle cx="78" cy="112" r="46" /><circle cx="118" cy="72" r="50" /><circle cx="180" cy="66" r="52" />
+            <circle cx="228" cy="104" r="44" /><circle cx="196" cy="136" r="40" /><circle cx="128" cy="140" r="42" />
+            <circle cx="60" cy="140" r="26" /><circle cx="250" cy="138" r="26" />
+          </g>
+        </svg>
+        <p id="bubble-text">Hi 👋</p>
+      </div>
+    </main>
+
+    <footer id="footer">
+      <div class="footer-id">
+        <span class="footer-name">%NAME%</span>
+        <span class="footer-dot" aria-hidden="true">·</span>
+        <span class="footer-tagline">%TAGLINE%</span>
+      </div>
+      <nav class="footer-links" id="footer-links" aria-label="Contact and social links"></nav>
+    </footer>
+
+    <button id="tilt-hint" class="chip" type="button" hidden>Tap to look around</button>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

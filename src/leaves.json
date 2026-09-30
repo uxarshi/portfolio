@@ -1,0 +1,155 @@
+[
+ {
+  "name": "front",
+  "file": "leaves/front.webp",
+  "size": [
+   119,
+   128
+  ],
+  "flat": true
+ },
+ {
+  "name": "back",
+  "file": "leaves/back.webp",
+  "size": [
+   114,
+   128
+  ],
+  "flat": true
+ },
+ {
+  "name": "edge",
+  "file": "leaves/edge.webp",
+  "size": [
+   33,
+   128
+  ],
+  "flat": false
+ },
+ {
+  "name": "angled-left",
+  "file": "leaves/angled-left.webp",
+  "size": [
+   128,
+   122
+  ],
+  "flat": true
+ },
+ {
+  "name": "angled-right",
+  "file": "leaves/angled-right.webp",
+  "size": [
+   128,
+   120
+  ],
+  "flat": true
+ },
+ {
+  "name": "top",
+  "file": "leaves/top.webp",
+  "size": [
+   128,
+   79
+  ],
+  "flat": true
+ },
+ {
+  "name": "curled-slightly",
+  "file": "leaves/curled-slightly.webp",
+  "size": [
+   128,
+   108
+  ],
+  "flat": true
+ },
+ {
+  "name": "curled",
+  "file": "leaves/curled.webp",
+  "size": [
+   116,
+   128
+  ],
+  "flat": false
+ },
+ {
+  "name": "wrinkled",
+  "file": "leaves/wrinkled.webp",
+  "size": [
+   107,
+   128
+  ],
+  "flat": false
+ },
+ {
+  "name": "torn",
+  "file": "leaves/torn.webp",
+  "size": [
+   128,
+   126
+  ],
+  "flat": true
+ },
+ {
+  "name": "spotted",
+  "file": "leaves/spotted.webp",
+  "size": [
+   128,
+   107
+  ],
+  "flat": true
+ },
+ {
+  "name": "crushed",
+  "file": "leaves/crushed.webp",
+  "size": [
+   128,
+   76
+  ],
+  "flat": true
+ },
+ {
+  "name": "withered",
+  "file": "leaves/withered.webp",
+  "size": [
+   128,
+   122
+  ],
+  "flat": false
+ },
+ {
+  "name": "turning-1",
+  "file": "leaves/turning-1.webp",
+  "size": [
+   88,
+   128
+  ],
+  "flat": true
+ },
+ {
+  "name": "turning-2",
+  "file": "leaves/turning-2.webp",
+  "size": [
+   107,
+   128
+  ],
+  "flat": true
+ },
+ {
+  "name": "turning-3",
+  "file": "leaves/turning-3.webp",
+  "size": [
+   115,
+   128
+  ],
+  "flat": true
+ },
+ {
+  "name": "turning-4",
+  "file": "leaves/turning-4.webp",
+  "size": [
+   83,
+   128
+  ],
+  "flat": true
+ }
+]

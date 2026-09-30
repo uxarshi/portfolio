@@ -1,0 +1,475 @@
+@import '@fontsource/mali/latin-500.css';
+@import '@fontsource/mali/latin-600.css';
+
+:root {
+  --ink: #6f5550;
+  --ink-soft: #8c716a;
+  --paper: #fff8ef;
+  --line: rgba(205, 160, 135, 0.55);
+  --glass: rgba(255, 246, 238, 0.62);
+  --font: 'Mali', 'Comic Neue', 'Segoe Print', 'Chalkboard SE', ui-rounded, system-ui, sans-serif;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #f7d9c9;
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ─── stage ─────────────────────────────────────────────────────────────── */
+
+#stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none; /* drag-to-look on phones */
+}
+
+/* The still painting. Before JS runs it simply covers the screen; layout.js
+   then positions it exactly where the WebGL scene will draw. */
+#still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 65%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+#still.placed {
+  inset: auto;
+  object-fit: fill;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+
+#stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+#stage canvas.ready {
+  opacity: 1;
+}
+
+/* ─── thought bubble ────────────────────────────────────────────────────── */
+
+#bubble {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 250px; /* overwritten by layout.js */
+  aspect-ratio: 300 / 190;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 6px 14px rgba(190, 120, 100, 0.18));
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+#bubble.placed {
+  opacity: 1;
+}
+
+.bubble-cloud {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.cloud-line circle {
+  fill: var(--line);
+  stroke: var(--line);
+  stroke-width: 5;
+}
+
+.cloud-fill circle {
+  fill: var(--paper);
+}
+
+#bubble-text {
+  position: absolute;
+  left: 15%;
+  right: 13%;
+  top: 17%;
+  bottom: 12%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 500;
+  font-size: calc(var(--bubble-w, 250px) * 0.068);
+  line-height: 1.28;
+  color: var(--ink);
+  text-wrap: balance;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+#bubble-text.out {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+/* ─── footer ────────────────────────────────────────────────────────────── */
+
+#footer {
+  position: fixed;
+  left: 50%;
+  bottom: calc(12px + var(--safe-b));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: calc(100vw - 24px);
+  padding: 7px 10px 7px 16px;
+  border-radius: 999px;
+  background: var(--glass);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  box-shadow: 0 2px 12px rgba(170, 110, 90, 0.12);
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.footer-id {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footer-name {
+  font-weight: 600;
+}
+
+.footer-dot {
+  margin: 0 5px;
+  color: var(--ink-soft);
+}
+
+.footer-tagline {
+  color: var(--ink-soft);
+}
+
+.footer-links {
+  display: flex;
+  gap: 2px;
+}
+
+.footer-links a {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: var(--ink);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  background: rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.footer-links a:focus-visible,
+.sound-toggle:focus-visible,
+.chip:focus-visible {
+  outline: 2px solid var(--ink-soft);
+  outline-offset: 2px;
+}
+
+.footer-links svg {
+  width: 17px;
+  height: 17px;
+}
+
+@media (max-width: 480px) {
+  #footer {
+    gap: 6px;
+    padding: 6px 6px 6px 16px;
+    border-radius: 22px;
+  }
+  .footer-id {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+  .footer-name {
+    font-size: 13px;
+  }
+  .footer-tagline {
+    font-size: 11.5px;
+  }
+  .footer-dot {
+    display: none;
+  }
+  .footer-links a {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* ─── sound on / off ────────────────────────────────────────────────────── */
+
+.sound-toggle {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  right: calc(14px + env(safe-area-inset-right, 0px));
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 12px;
+  border: 1.5px solid rgba(214, 160, 134, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 249, 242, 0.94);
+  box-shadow: 0 4px 16px rgba(150, 90, 70, 0.22), 0 1px 3px rgba(150, 90, 70, 0.14);
+  font: 600 14px var(--font);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.sound-toggle:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.sound-toggle svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  stroke-width: 2;
+}
+
+/* on: the speaker turns warm coral, like the cats' hearts */
+.sound-toggle[aria-pressed='true'] {
+  border-color: rgba(229, 132, 124, 0.75);
+}
+
+.sound-toggle[aria-pressed='true'] svg {
+  color: #e07a73;
+}
+
+/* off: a soft coral ripple, a few times after the page opens, to invite a tap */
+.sound-toggle[aria-pressed='false']::after {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  pointer-events: none;
+  animation: sound-call 2.4s 2.5s ease-out 3;
+}
+
+@keyframes sound-call {
+  from {
+    box-shadow: 0 0 0 0 rgba(233, 139, 134, 0.6);
+  }
+  to {
+    box-shadow: 0 0 0 12px rgba(233, 139, 134, 0);
+  }
+}
+
+/* ─── little reactions (a heart over a cat you tapped) ─────────────────── */
+
+.pop {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -100%);
+  font-size: 20px;
+  color: #e98b86;
+  text-shadow: 0 1px 6px rgba(255, 248, 239, 0.9);
+  pointer-events: none;
+  animation: pop-up 1.5s ease-out forwards;
+}
+
+@keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -80%) scale(0.6);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -120%) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -260%) scale(1);
+  }
+}
+
+/* ─── balloon banners (unrolled under a balloon you tapped) ────────────── */
+
+.banner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: 0 0;
+}
+
+.banner-sway {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: max-content;
+  transform: translateX(-50%);
+  transform-origin: 50% 0;
+  filter: drop-shadow(0 3px 6px rgba(170, 110, 90, 0.2));
+  animation: banner-sway 5s ease-in-out infinite;
+}
+
+.banner-strings {
+  display: block;
+  width: 100%;
+  height: 16px;
+  overflow: visible;
+  transform-origin: 50% 0;
+  animation: banner-strings-in 0.4s ease-out both;
+}
+
+.banner-strings path {
+  fill: none;
+  stroke: #a88779;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.banner-cloth {
+  margin-top: -1px;
+  animation: banner-unroll 0.9s 0.3s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+}
+
+/* a ribbon with notched ends and a stitched hem */
+.banner-ribbon {
+  position: relative;
+  display: block;
+  padding: 6px 22px 7px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 600 13px/1.25 var(--font);
+  text-align: center;
+  white-space: pre; /* two lines, split in ui.js */
+  clip-path: polygon(0 0, 100% 0, calc(100% - 11px) 50%, 100% 100%, 0 100%, 11px 50%);
+}
+
+.banner-ribbon::before {
+  content: '';
+  position: absolute;
+  inset: 3px 12px;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+}
+
+.banner.leaving .banner-cloth {
+  animation: banner-roll-up 0.6s ease-in both;
+}
+
+.banner.leaving .banner-strings {
+  animation: banner-strings-out 0.35s 0.5s ease-in both;
+}
+
+@keyframes banner-sway {
+  0%,
+  100% {
+    transform: translateX(-50%) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(2deg);
+  }
+}
+
+@keyframes banner-strings-in {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes banner-strings-out {
+  to {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes banner-unroll {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-3px);
+  }
+  to {
+    clip-path: inset(0 0 -10px 0);
+  }
+}
+
+@keyframes banner-roll-up {
+  from {
+    clip-path: inset(0 0 -10px 0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+/* ─── small chips (tilt hint, later: sound, dusk) ───────────────────────── */
+
+.chip {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font: 500 13px var(--font);
+  color: var(--ink);
+  z-index: 6;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #bubble-text,
+  #bubble,
+  #stage canvas {
+    transition: none;
+  }
+  .sound-toggle::after {
+    animation: none;
+  }
+}
