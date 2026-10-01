@@ -1,10 +1,10 @@
-// Ambient sound: birdsong and a faint river, made on the fly with the Web
+// Ambient sound: birdsong and a faint breeze, made on the fly with the Web
 // Audio API (no audio files to download). Off until the visitor turns it on
 // (browsers only allow sound after a click or tap anyway); the choice is
 // remembered, and if it was on, it comes back with the first click or key.
 //
-// The river is filtered noise: a low, slowly breathing wash, soft swells of
-// water lapping at the embankment, and now and then a tiny droplet. The birds
+// The air is filtered noise: a very quiet breeze that now and then swells and
+// fades, plus the odd tiny water droplet. The birds
 // are whistled sine tones swept in pitch, a few kinds with their own songs,
 // each at its own distance and side, with a little echo of open air.
 //
@@ -34,9 +34,9 @@ export function createSound(config) {
   const volume = config.sound?.volume ?? 0.8
   const AC = window.AudioContext || window.webkitAudioContext
   let ctx = null
-  let master, verb, lap, lapFilter, drops
+  let master, verb, drops, breeze, breezeFilter
   let birds = []
-  let nextLap = 0
+  let nextGust = 0
   let nextDrop = 0
   let timer = 0
   let on = false
@@ -145,32 +145,20 @@ export function createSound(config) {
   // ── the river ──────────────────────────────────────────────────────────────
 
   function river() {
-    const noise = noiseBuffer(11)
-
-    // the body of the water: a low wash that slowly breathes
-    const lp = ctx.createBiquadFilter()
-    lp.type = 'lowpass'
-    lp.frequency.value = 480
-    lp.Q.value = 0.2
-    const body = ctx.createGain()
-    body.gain.value = 0.15
-    lfo(0.061, 140, lp.frequency)
-    lfo(0.097, 0.035, body.gain)
-    loop(noise).connect(lp).connect(body).connect(master)
-
-    // lapping against the embankment: soft swells of brighter water
-    lapFilter = ctx.createBiquadFilter()
-    lapFilter.type = 'bandpass'
-    lapFilter.frequency.value = 700
-    lapFilter.Q.value = 0.9
-    const soft = ctx.createBiquadFilter() // no hiss: water, not wind
+    // a very quiet breeze: soft, dark air that now and then swells and fades
+    // away again (kept low and rounded so it never sounds like rushing water)
+    breezeFilter = ctx.createBiquadFilter()
+    breezeFilter.type = 'bandpass'
+    breezeFilter.frequency.value = 450
+    breezeFilter.Q.value = 0.5
+    const soft = ctx.createBiquadFilter()
     soft.type = 'lowpass'
-    soft.frequency.value = 1500
-    lap = ctx.createGain()
-    lap.gain.value = 0
-    loop(noise, 0.91, 4.3).connect(lapFilter).connect(soft).connect(lap)
-    lap.connect(master)
-    lap.connect(verb)
+    soft.frequency.value = 900
+    breeze = ctx.createGain()
+    breeze.gain.value = 0
+    loop(noiseBuffer(13), 0.8, 2.1).connect(breezeFilter).connect(soft).connect(breeze)
+    breeze.connect(master)
+    breeze.connect(verb)
 
     // tiny droplets, soft and a little far
     const dlp = ctx.createBiquadFilter()
@@ -184,13 +172,14 @@ export function createSound(config) {
   }
 
   function scheduleWater(until) {
-    while (nextLap < until) {
-      const t = nextLap
-      const len = rand(0.5, 1.2)
-      lapFilter.frequency.setTargetAtTime(rand(420, 1100), t, 0.25)
-      lap.gain.setTargetAtTime(rand(0.05, 0.12), t, len * 0.35)
-      lap.gain.setTargetAtTime(0, t + len * 0.6, len * 0.6)
-      nextLap = t + rand(0.9, 2.8)
+    while (nextGust < until) {
+      // one breath of air: rises slowly, hangs a moment, drifts away
+      const t = nextGust
+      const len = rand(7, 12)
+      breezeFilter.frequency.setTargetAtTime(rand(350, 700), t, 1)
+      breeze.gain.setTargetAtTime(rand(0.02, 0.036), t, len * 0.3)
+      breeze.gain.setTargetAtTime(0, t + len * 0.55, len * 0.3)
+      nextGust = t + len + rand(2.5, 6)
     }
     while (nextDrop < until) {
       // a droplet: a quick rising blip (a bubble's ring gets higher as it shrinks)
@@ -528,7 +517,7 @@ export function createSound(config) {
     await ctx.resume()
     const t = ctx.currentTime
     // the first birds a few seconds in, not all at once
-    nextLap = Math.max(nextLap, t + 0.3)
+    nextGust = Math.max(nextGust, t + 0.5)
     nextDrop = Math.max(nextDrop, t + 1)
     birds.forEach((b, i) => (b.next = Math.max(b.next, t + (i === 0 ? rand(1, 2.5) : rand(2, 12)))))
     master.gain.cancelScheduledValues(t)
