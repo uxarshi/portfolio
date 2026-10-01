@@ -4,7 +4,7 @@
 // remembered, and if it was on, it comes back with the first click or key.
 //
 // The air is filtered noise: a very quiet breeze that now and then swells and
-// fades, plus the odd tiny water droplet. The birds
+// fades. The birds
 // are whistled sine tones swept in pitch, a few kinds with their own songs,
 // each at its own distance and side, with a little echo of open air.
 //
@@ -34,10 +34,9 @@ export function createSound(config) {
   const volume = config.sound?.volume ?? 0.8
   const AC = window.AudioContext || window.webkitAudioContext
   let ctx = null
-  let master, verb, drops, breeze, breezeFilter
+  let master, verb, breeze, breezeFilter
   let birds = []
   let nextGust = 0
-  let nextDrop = 0
   let timer = 0
   let on = false
   let running = false // on, and actually playing (after a click or tap)
@@ -159,16 +158,6 @@ export function createSound(config) {
     loop(noiseBuffer(13), 0.8, 2.1).connect(breezeFilter).connect(soft).connect(breeze)
     breeze.connect(master)
     breeze.connect(verb)
-
-    // tiny droplets, soft and a little far
-    const dlp = ctx.createBiquadFilter()
-    dlp.type = 'lowpass'
-    dlp.frequency.value = 1800
-    drops = ctx.createGain()
-    drops.gain.value = 0.5
-    drops.connect(dlp)
-    dlp.connect(master)
-    dlp.connect(verb)
   }
 
   function scheduleWater(until) {
@@ -180,14 +169,6 @@ export function createSound(config) {
       breeze.gain.setTargetAtTime(rand(0.02, 0.036), t, len * 0.3)
       breeze.gain.setTargetAtTime(0, t + len * 0.55, len * 0.3)
       nextGust = t + len + rand(2.5, 6)
-    }
-    while (nextDrop < until) {
-      // a droplet: a quick rising blip (a bubble's ring gets higher as it shrinks)
-      const t = nextDrop
-      const f = rand(550, 1300)
-      tone(drops, t, rand(0.03, 0.06), [[0, f], [1, f * rand(1.6, 2.4)]], rand(0.012, 0.03), { wave: null })
-      // droplets come in little clusters
-      nextDrop = t + (Math.random() < 0.6 ? rand(0.08, 0.35) : rand(1.5, 5))
     }
   }
 
@@ -518,7 +499,6 @@ export function createSound(config) {
     const t = ctx.currentTime
     // the first birds a few seconds in, not all at once
     nextGust = Math.max(nextGust, t + 0.5)
-    nextDrop = Math.max(nextDrop, t + 1)
     birds.forEach((b, i) => (b.next = Math.max(b.next, t + (i === 0 ? rand(1, 2.5) : rand(2, 12)))))
     master.gain.cancelScheduledValues(t)
     master.gain.setValueAtTime(master.gain.value, t)
