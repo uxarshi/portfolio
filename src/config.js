@@ -18,7 +18,7 @@ const config = {
     '🎈 The balloons like a little attention.',
     '🐈 The cats always love you back.',
     '💡 The lamp posts might have a bright idea.',
-    'Go on. Tap around.',
+    'Tap tap!',
   ],
   messageSeconds: 5, // how long each line stays before fading to the next
   lastMessageSeconds: 10, // the final line (the invitation to explore) stays longer
