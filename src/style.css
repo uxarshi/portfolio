@@ -88,11 +88,16 @@ body {
   width: 250px; /* overwritten by layout.js */
   aspect-ratio: 300 / 190;
   transform-origin: 50% 100%;
+  transition: opacity 0.6s ease, scale 0.6s ease;
   pointer-events: none;
   z-index: 2;
   filter: drop-shadow(0 6px 14px rgba(190, 120, 100, 0.18));
   opacity: 0;
-  transition: opacity 0.6s ease;
+}
+
+/* the long lines get a roomier cloud (grows from its tail) */
+#bubble.roomy {
+  scale: 1.3;
 }
 
 #bubble.placed {
@@ -119,10 +124,10 @@ body {
 
 #bubble-text {
   position: absolute;
-  left: 15%;
-  right: 13%;
-  top: 17%;
-  bottom: 12%;
+  left: 24%;
+  right: 21%;
+  top: 30%;
+  bottom: 20%;
   margin: 0;
   display: flex;
   align-items: center;
@@ -132,8 +137,9 @@ body {
   font-size: calc(var(--bubble-w, 250px) * 0.068);
   line-height: 1.28;
   color: var(--ink);
+  white-space: pre-line; /* keeps the line breaks in the messages */
   text-wrap: balance;
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 #bubble-text.out {

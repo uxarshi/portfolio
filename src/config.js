@@ -11,17 +11,24 @@ const config = {
   // Shown one at a time in the girl's thought bubble. `{name}` is replaced
   // with the name above.
   messages: [
-    "Hi, I'm Arshi",
-    'My portfolio is getting a little refresh…',
-    'New work is on its way, back soon',
-    'Psst.. that balloon looks suspiciously clickable.',
+    'Hi! I’m Arshi 👋\nUX Designer & curious human.',
+    'I like making digital experiences feel clear, useful - and occasionally a little delightful.',
+    'And since you’re here…',
+    'Why not explore?',
+    '🎈 The balloons like a little attention.',
+    '🐈 The cats always love you back.',
+    '💡 The lamp posts might have a bright idea.',
+    'Go on. Tap around.',
   ],
   messageSeconds: 5, // how long each line stays before fading to the next
+  lastMessageSeconds: 10, // the final line (the invitation to explore) stays longer
 
   // What she thinks when someone clicks things in the scene (one is picked at
   // random). Clicking the girl herself skips to the next message above.
   reactions: {
-    balloon: ['Up, up and away 🎈', 'Wheee!', 'Bring it back down soon!'],
+    // the first taps on a balloon, in this order; after that one of `balloon`
+    balloonFirst: ['Wheee!', 'This message was meant to find you'],
+    balloon: ['Up, up and away 🎈', 'Bring it back down soon!'],
     cat: ['Mrrp? 🐾', 'The cats say hi', 'Pspsps…'],
   },
 

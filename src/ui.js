@@ -53,9 +53,26 @@ export function createMessages(config, { interactive }) {
   if (!interactive) lines = lines.filter((s) => !/click/i.test(s))
   else if (matchMedia('(pointer: coarse)').matches)
     lines = lines.map((s) => s.replace(/\bclick(ing|able)?\b/gi, (w) => TAP[w.toLowerCase()]))
+  const bubble = document.getElementById('bubble')
   let i = 0
   let timer = 0
-  el.textContent = lines[0]
+  let current = ''
+
+  // Long lines get a smaller type size so they always fit inside the cloud
+  function setText(text) {
+    current = text
+    el.textContent = text
+    el.style.fontSize = ''
+    bubble.classList.toggle('roomy', text.length > 60)
+    let size = parseFloat(getComputedStyle(el).fontSize)
+    for (let n = 0; n < 20 && (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1); n++) {
+      size *= 0.94
+      el.style.fontSize = `${size}px`
+    }
+  }
+  if (import.meta.env.DEV) i = Math.max(0, Math.min(lines.length - 1, +new URLSearchParams(location.search).get('msg') || 0))
+  setText(lines[i])
+  addEventListener('resize', () => setText(current))
 
   let swap = 0
   function show(next, text) {
@@ -63,13 +80,18 @@ export function createMessages(config, { interactive }) {
     el.classList.add('out')
     clearTimeout(swap)
     swap = setTimeout(() => {
-      el.textContent = text ?? lines[i]
+      setText(text ?? lines[i])
       el.classList.remove('out')
-    }, 900)
+    }, 450)
   }
   function schedule() {
-    clearInterval(timer)
-    timer = setInterval(() => show(i + 1), config.messageSeconds * 1000)
+    clearTimeout(timer)
+    const last = i === lines.length - 1
+    const secs = last ? (config.lastMessageSeconds ?? config.messageSeconds) : config.messageSeconds
+    timer = setTimeout(() => {
+      show(i + 1)
+      schedule()
+    }, secs * 1000)
   }
   schedule()
 
@@ -176,7 +198,8 @@ export function placeDom(L) {
   const b = bubbleRect(L)
   const bubble = document.getElementById('bubble')
   bubble.style.width = `${b.width}px`
-  bubble.style.transform = `translate(${b.left}px, ${b.top}px)`
+  // `translate` (not `transform`) so the roomy `scale` grows the cloud in place
+  bubble.style.translate = `${b.left}px ${b.top}px`
   bubble.style.setProperty('--bubble-w', `${b.width}px`)
   bubble.classList.add('placed')
 }

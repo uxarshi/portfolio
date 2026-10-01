@@ -398,8 +398,11 @@ export async function createLife(scene, { messages, config, pop, banner, sound }
 
   // ── reactions ──────────────────────────────────────────────────────────────
   const lines = config.reactions || {}
+  let balloonTaps = 0
   function say(kind) {
-    if (lines[kind]?.length) messages.say(pickOne(lines[kind]))
+    if (kind === 'balloon' && balloonTaps < (lines.balloonFirst?.length || 0)) {
+      messages.say(lines.balloonFirst[balloonTaps++])
+    } else if (lines[kind]?.length) messages.say(pickOne(lines[kind]))
   }
 
   /** React to a click / tap on a sprite (from scene.pick). */
