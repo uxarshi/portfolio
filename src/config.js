@@ -13,7 +13,7 @@ const config = {
   messages: [
     'Hi! I’m Arshi 👋\nUX Designer & curious human.',
     'I like making digital experiences feel clear, useful - and occasionally a little delightful.',
-    'And since you’re here…',
+    'Since you’re here while my portfolio gets a makeover…',
     'Why not explore?',
     '🎈 The balloons like a little attention.',
     '🐈 The cats always love you back.',
