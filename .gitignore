@@ -1,4 +1,3 @@
-node_modules
-dist
-tools/*.onnx
 .DS_Store
+new images/video1.mp4
+new images/video2.mp4
