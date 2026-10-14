@@ -1,0 +1,59 @@
+/* Hot-air balloons drifting in the footer painting's sky.
+   Shared by index.html and case-study.html. The painting's sky is transparent,
+   so the page background is the sky; the balloons sit behind the painting and
+   inside the footer box, clear of the text above and the pills below.
+   --x/--y/--w are % of the footer's width/height on desktop, --m* on phones;
+   each one is sized so the whole balloon, basket included, stays above the
+   hills (checked against the painting's skyline). */
+
+.ft-sky > img { position: relative; z-index: 1; }
+.ft-sky > .wk-footer-pills,
+.ft-sky > .cs-footer-pills { z-index: 2; }
+
+.ft-balloons {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ft-balloon {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: auto;
+  transform-origin: 50% 20%;
+  animation: ft-float var(--dur, 7s) ease-in-out var(--delay, 0s) infinite alternate;
+  will-change: transform;
+}
+.ft-flip { scale: -1 1; }   /* mirrored copies, so the tiny far ones don't repeat */
+
+/* Depth: near balloons are big and move the most; distant ones are
+   small and barely drift.
+   Sources: b* = the balloon sheet, h* = cut from the hero (tools/build_footer_balloons.py). */
+.ft-1 { --x: 9.5%; --y: 5%;  --w: 1.8%; --amp: 3px; --dur: 9.5s; --delay: -3s; }
+.ft-2 { --x: 14%;  --y: 3%;  --w: 4.2%; --amp: 6px; --dur: 8s;   --delay: -6s;   --mx: 16%; --my: 12px; --mw: 28px; }
+.ft-3 { --x: 24%;  --y: 9%;  --w: 1.4%; --amp: 2px; --dur: 10s;  --delay: -1s; }
+.ft-4 { --x: 31%;  --y: 9%;  --w: 2.8%; --amp: 4px; --dur: 9s;   --delay: -5.5s; --mx: 34%; --my: 30px; --mw: 14px; }
+.ft-5 { --x: 44%;  --y: 4%;  --w: 6.2%; --amp: 9px; --dur: 7.5s; --delay: -2s;   --mx: 50%; --my: 10px; --mw: 40px; }
+.ft-6 { --x: 58%;  --y: 20%; --w: 2.2%; --amp: 3px; --dur: 9.8s; --delay: -4s;   --mx: 90%; --my: 26px; --mw: 12px; }
+.ft-7 { --x: 67%;  --y: 7%;  --w: 3.6%; --amp: 5px; --dur: 8.4s; --delay: -0.5s; --mx: 74%; --my: 14px; --mw: 26px; }
+.ft-8 { --x: 82%;  --y: 6%;  --w: 4%;   --amp: 6px; --dur: 7.8s; --delay: -7s; }
+.ft-9 { --x: 93%;  --y: 14%; --w: 1.3%; --amp: 2px; --dur: 10.5s; --delay: -2.5s; }
+
+@keyframes ft-float {
+  0%   { transform: translate(0, 0) rotate(-1.2deg); }
+  50%  { transform: translate(2px, calc(var(--amp, 6px) * -0.55)) rotate(0.4deg); }
+  100% { transform: translate(-2px, calc(var(--amp, 6px) * -1)) rotate(1.2deg); }
+}
+
+@media (max-width: 760px) {
+  .ft-balloon { left: var(--mx); top: var(--my); width: var(--mw); --amp: 4px; }
+  .ft-1, .ft-3, .ft-8, .ft-9 { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ft-balloon { animation: none; }
+}

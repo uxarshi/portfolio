@@ -1,0 +1,208 @@
+{
+ "size": [
+  1920,
+  1080
+ ],
+ "sprites": [
+  {
+   "src": "assets/hero/balloon-1.webp",
+   "rect": [
+    0,
+    16,
+    69,
+    152
+   ],
+   "name": "balloon-1",
+   "kind": "balloon"
+  },
+  {
+   "src": "assets/hero/balloon-6.webp",
+   "rect": [
+    1492,
+    26,
+    112,
+    146
+   ],
+   "name": "balloon-6",
+   "kind": "balloon"
+  },
+  {
+   "src": "assets/hero/balloon-2.webp",
+   "rect": [
+    156,
+    61,
+    88,
+    117
+   ],
+   "name": "balloon-2",
+   "kind": "balloon"
+  },
+  {
+   "src": "assets/hero/balloon-3.webp",
+   "rect": [
+    359,
+    135,
+    88,
+    120
+   ],
+   "name": "balloon-3",
+   "kind": "balloon"
+  },
+  {
+   "src": "assets/hero/balloon-4.webp",
+   "rect": [
+    637,
+    247,
+    71,
+    95
+   ],
+   "name": "balloon-4",
+   "kind": "balloon"
+  },
+  {
+   "src": "assets/hero/balloon-5.webp",
+   "rect": [
+    1388,
+    300,
+    71,
+    92
+   ],
+   "name": "balloon-5",
+   "kind": "balloon"
+  },
+  {
+   "src": "assets/hero/cat-tabby.webp",
+   "rect": [
+    1352,
+    861,
+    110,
+    120
+   ],
+   "name": "cat-tabby",
+   "kind": "cat",
+   "anchor": [
+    1407,
+    979
+   ],
+   "tail": {
+    "map": "assets/hero/cat-tabby-tail.png",
+    "base": [
+     1445,
+     922
+    ]
+   }
+  },
+  {
+   "src": "assets/hero/cat-white.webp",
+   "rect": [
+    1850,
+    912,
+    70,
+    129
+   ],
+   "name": "cat-white",
+   "kind": "cat",
+   "anchor": [
+    1885,
+    1039
+   ]
+  },
+  {
+   "src": "assets/hero/cat-orange.webp",
+   "rect": [
+    640,
+    886,
+    132,
+    166
+   ],
+   "name": "cat-orange",
+   "kind": "cat",
+   "anchor": [
+    706,
+    1050
+   ],
+   "tail": {
+    "map": "assets/hero/cat-orange-tail.png",
+    "base": [
+     660,
+     958
+    ]
+   }
+  },
+  {
+   "src": "assets/hero/girl.webp",
+   "rect": [
+    1038,
+    484,
+    296,
+    533
+   ],
+   "name": "girl",
+   "kind": "girl",
+   "wind": {
+    "map": "assets/hero/girl-wind.png"
+   }
+  }
+ ],
+ "lamps": [
+  {
+   "x": 1860,
+   "y": 345,
+   "r": 70
+  },
+  {
+   "x": 1528,
+   "y": 532,
+   "r": 40
+  },
+  {
+   "x": 1466,
+   "y": 615,
+   "r": 26
+  },
+  {
+   "x": 1403,
+   "y": 640,
+   "r": 24
+  },
+  {
+   "x": 1365,
+   "y": 668,
+   "r": 20
+  },
+  {
+   "x": 1327,
+   "y": 695,
+   "r": 17
+  },
+  {
+   "x": 1298,
+   "y": 710,
+   "r": 15
+  },
+  {
+   "x": 1270,
+   "y": 722,
+   "r": 13
+  },
+  {
+   "x": 1243,
+   "y": 736,
+   "r": 11
+  },
+  {
+   "x": 1220,
+   "y": 746,
+   "r": 10
+  }
+ ],
+ "water": {
+  "map": "assets/hero/water.png",
+  "rect": [
+   0,
+   686,
+   1050,
+   150
+  ]
+ }
+}

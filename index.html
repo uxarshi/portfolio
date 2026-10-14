@@ -1,69 +1,282 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>%TITLE%</title>
-    <meta name="description" content="%DESCRIPTION%" />
-    <meta name="author" content="%NAME%" />
-    <meta name="theme-color" content="%THEME%" />
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arshi Shayesta, UI/UX designer</title>
+<meta name="description" content="Arshi Shayesta designs calm, intuitive, bilingual digital products.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Caveat:wght@500..700&family=Instrument+Sans:wght@400..700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="footer-balloons.css">
+<!-- Arriving at #work (a case study's "All projects"): jump, don't glide past the hero (main.js restores smooth scrolling). -->
+<script>if (location.hash === '#work') document.documentElement.style.scrollBehavior = 'auto';</script>
+</head>
+<body>
+<div id="top" class="page">
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="%TITLE%" />
-    <meta property="og:description" content="%DESCRIPTION%" />
-    <meta property="og:url" content="%URL%" />
-    <meta property="og:image" content="%OG_IMAGE%" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="A girl on a riverside promenade at sunset, looking up at a thought bubble" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="%TITLE%" />
-    <meta name="twitter:description" content="%DESCRIPTION%" />
-    <meta name="twitter:image" content="%OG_IMAGE%" />
+<header class="hp-header">
+  <a class="hp-brand" href="#top">Arshi Shayesta</a>
+  <nav class="hp-nav" aria-label="Main">
+    <div class="hp-nav-links">
+      <a class="hp-link" href="#work">Work</a>
+      <a class="hp-link" href="#about">About</a>
+      <span class="hp-nav-divider" aria-hidden="true"></span>
+    </div>
+    <a class="hp-link hp-link--out" href="https://www.linkedin.com/in/ashayesta/">LinkedIn<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+    <button type="button" class="hp-icon-btn hp-link hp-sound" aria-pressed="false" data-sound-toggle>
+      <svg class="hp-sound-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      <svg class="hp-sound-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></svg>
+      <span class="hp-sound-label">Sound off</span>
+    </button>
+    <button type="button" class="hp-menu hp-icon-btn hp-link" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+    </button>
+  </nav>
+</header>
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" as="image" href="/scene/scene.webp" fetchpriority="high" />
-  </head>
-  <body>
-    <h1 class="sr-only">%NAME%, %TAGLINE%. Portfolio coming soon.</h1>
+<section class="hp-hero" aria-labelledby="hp-title">
 
-    <main id="stage" aria-label="Illustrated scene">
-      <img
-        id="still"
-        src="/scene/scene.webp"
-        alt="A soft pastel painting: a girl in a white dress and blue-grey hijab stands on a riverside promenade at sunset, looking up at a thought bubble, with hot-air balloons, birds, falling leaves, trees, street lamps, benches and three cats."
-        fetchpriority="high"
-        decoding="async"
-      />
+  <div class="hp-stage">
+    <img class="hp-scene" src="assets/hero.jpg" alt="Crayon illustration: a girl in a blue hijab and ivory dress stands on a riverside promenade at sunset, looking up at hot-air balloons, with three cats nearby.">
+    <div class="hp-bubble-dot hp-bubble-dot--sm" aria-hidden="true"></div>
+    <div class="hp-bubble-dot hp-bubble-dot--md" aria-hidden="true"></div>
+    <p class="hp-bubble">Heading to my desk. Want to come along?</p>
+  </div>
 
-      <div id="bubble" role="status" aria-live="polite">
-        <svg class="bubble-cloud" viewBox="0 0 300 190" aria-hidden="true" focusable="false">
-          <g class="cloud-line">
-            <circle cx="78" cy="112" r="46" /><circle cx="118" cy="72" r="50" /><circle cx="180" cy="66" r="52" />
-            <circle cx="228" cy="104" r="44" /><circle cx="196" cy="136" r="40" /><circle cx="128" cy="140" r="42" />
-            <circle cx="60" cy="140" r="26" /><circle cx="250" cy="138" r="26" />
-          </g>
-          <g class="cloud-fill">
-            <circle cx="78" cy="112" r="46" /><circle cx="118" cy="72" r="50" /><circle cx="180" cy="66" r="52" />
-            <circle cx="228" cy="104" r="44" /><circle cx="196" cy="136" r="40" /><circle cx="128" cy="140" r="42" />
-            <circle cx="60" cy="140" r="26" /><circle cx="250" cy="138" r="26" />
-          </g>
-        </svg>
-        <p id="bubble-text">Hi 👋</p>
+  <!-- Intro walk: fades in over the illustration once it starts playing.
+       It ends on her laptop: "Show projects" comes up on the screen, she
+       presses Return, and the screen zooms open onto the Work section. -->
+  <div class="hp-walk" aria-hidden="true">
+    <div class="hp-walk-frame">
+      <video class="hp-walk-video" src="assets/video/intro-walk.mp4" playsinline muted preload="metadata"></video>
+      <div class="hp-laptop">
+        <div class="hp-laptop-cta">
+          <button type="button" class="hp-laptop-btn" data-show-projects tabindex="-1">
+            <span class="hp-laptop-label">Show projects</span>
+            <span class="hp-laptop-key" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5v7a3 3 0 0 1-3 3H6"/><path d="m10 11-4 4 4 4"/></svg></span>
+          </button>
+        </div>
+        <div class="hp-laptop-glass" aria-hidden="true"></div>
+        <div class="hp-laptop-flash"></div>
       </div>
-    </main>
+    </div>
+    <button type="button" class="hp-walk-control" data-walk-control>Skip</button>
+  </div>
 
-    <footer id="footer">
-      <div class="footer-id">
-        <span class="footer-name">%NAME%</span>
-        <span class="footer-dot" aria-hidden="true">·</span>
-        <span class="footer-tagline">%TAGLINE%</span>
+  <svg class="hp-wave" aria-hidden="true" viewBox="0 0 1440 44" preserveAspectRatio="none"><path d="M0 24 C 120 10, 240 36, 360 22 S 600 8, 720 24 S 960 38, 1080 20 S 1320 10, 1440 26 L 1440 44 L 0 44 Z" fill="#F6ECDA"/><path d="M0 24 C 120 10, 240 36, 360 22 S 600 8, 720 24 S 960 38, 1080 20 S 1320 10, 1440 26" fill="none" stroke="#1D2340" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>
+
+  <div class="hp-card is-collapsed">
+    <svg class="hp-card-wave" aria-hidden="true" viewBox="0 0 390 30" preserveAspectRatio="none"><path d="M0 16 C 50 6, 100 26, 160 14 S 270 4, 320 16 S 370 24, 390 14 L 390 30 L 0 30 Z" fill="#F6ECDA"/><path d="M0 16 C 50 6, 100 26, 160 14 S 270 4, 320 16 S 370 24, 390 14" fill="none" stroke="#1D2340" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>
+    <button type="button" class="hp-handle hp-icon-btn" aria-expanded="false" aria-label="Show introduction" data-intro-toggle>
+      <span aria-hidden="true"></span>
+    </button>
+    <p class="hp-eyebrow hp-intro">Senior UI/UX Designer</p>
+    <h1 id="hp-title" class="hp-h1 hp-intro">Hi, I'm Arshi.</h1>
+    <p class="hp-lede hp-intro">I design calm, intuitive, bilingual digital products. How would you like to see my work?</p>
+
+    <div class="hp-choices">
+      <button type="button" class="hp-choice hp-choice--primary" data-walk-start>
+        <span class="hp-choice-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+        <span class="hp-choice-label">Walk with me</span>
+      </button>
+      <a href="#work" class="hp-choice hp-choice--secondary">
+        <span class="hp-choice-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg></span>
+        <span class="hp-choice-label">Skip to projects</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section id="work" class="wk-wrap wk-intro" aria-labelledby="wk-title">
+    <div class="wk-intro-row">
+      <div class="wk-intro-text">
+        <p class="wk-eyebrow">Selected work</p>
+        <h2 id="wk-title" class="wk-h1">Four stories from my desk.</h2>
       </div>
-      <nav class="footer-links" id="footer-links" aria-label="Contact and social links"></nav>
-    </footer>
+      <p class="wk-lede">Each project opens into a full case study: the problem, how I approached it, and what changed.</p>
+    </div>
+  </section>
 
-    <button id="tilt-hint" class="chip" type="button" hidden>Tap to look around</button>
+  <section class="wk-wrap wk-projects" aria-label="Projects">
+    <div class="wk-grid">
 
-    <script type="module" src="/src/main.js"></script>
-  </body>
+      <a class="wk-card wk-card--1" href="case-study.html">
+        <div class="wk-card-art">
+          <img class="wk-card-img" src="assets/case-study-1-thumbnail.webp" alt="Three phone mockups of the redesigned credit app: the Credit Profile list, the home screen with the credit score gauge, and the side menu.">
+          <span class="wk-card-no" aria-hidden="true">No. 1</span>
+        </div>
+        <div class="wk-card-body">
+          <div class="wk-tags">
+            <span class="wk-tag">Mobile app</span>
+            <span class="wk-tag">English / Arabic</span>
+          </div>
+          <h2 class="wk-card-title">Redesigning a national credit-reporting app</h2>
+          <p class="wk-card-text">New information architecture, security-first flows and a token-based design system for a bilingual consumer credit app.</p>
+          <div class="wk-card-foot">
+            <span class="wk-role">Role: Sole Senior UI/UX Designer</span>
+            <span class="wk-cta"><span class="wk-cta-text">Read case study</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="wk-card wk-card--2" href="#case-2">
+        <div class="wk-card-art">
+          <span class="wk-card-no" aria-hidden="true">No. 2</span>
+          <svg aria-hidden="true" width="68" height="118" viewBox="0 0 68 118" fill="none" stroke="#1D2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="60" height="110" rx="12"/><path d="M26 14h16"/></svg>
+          <span class="wk-card-placeholder">[Project image]</span>
+        </div>
+        <div class="wk-card-body">
+          <div class="wk-tags">
+            <span class="wk-tag">[Platform]</span>
+          </div>
+          <h2 class="wk-card-title">[Project name]</h2>
+          <p class="wk-card-text">[One line: the problem you solved and what changed]</p>
+          <div class="wk-card-foot">
+            <span class="wk-role">Role: [Your role]</span>
+            <span class="wk-cta"><span class="wk-cta-text">Read case study</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="wk-card wk-card--3" href="#case-3">
+        <div class="wk-card-art">
+          <span class="wk-card-no" aria-hidden="true">No. 3</span>
+          <svg aria-hidden="true" width="168" height="104" viewBox="0 0 168 104" fill="none" stroke="#1D2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="6" width="120" height="78" rx="6"/><path d="M6 90h156l-10 10H16z"/></svg>
+          <span class="wk-card-placeholder">[Project image]</span>
+        </div>
+        <div class="wk-card-body">
+          <div class="wk-tags">
+            <span class="wk-tag">[Platform]</span>
+          </div>
+          <h2 class="wk-card-title">[Project name]</h2>
+          <p class="wk-card-text">[One line: the problem you solved and what changed]</p>
+          <div class="wk-card-foot">
+            <span class="wk-role">Role: [Your role]</span>
+            <span class="wk-cta"><span class="wk-cta-text">Read case study</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="wk-card wk-card--4" href="#case-4">
+        <div class="wk-card-art">
+          <span class="wk-card-no" aria-hidden="true">No. 4</span>
+          <svg aria-hidden="true" width="68" height="118" viewBox="0 0 68 118" fill="none" stroke="#1D2340" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="60" height="110" rx="12"/><path d="M26 14h16"/></svg>
+          <span class="wk-card-placeholder">[Project image]</span>
+        </div>
+        <div class="wk-card-body">
+          <div class="wk-tags">
+            <span class="wk-tag">[Platform]</span>
+          </div>
+          <h2 class="wk-card-title">[Project name]</h2>
+          <p class="wk-card-text">[One line: the problem you solved and what changed]</p>
+          <div class="wk-card-foot">
+            <span class="wk-role">Role: [Your role]</span>
+            <span class="wk-cta"><span class="wk-cta-text">Read case study</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="wk-wrap wk-toolkit" aria-labelledby="wk-tools">
+    <svg aria-hidden="true" width="0" height="0" class="wk-defs"><defs><filter id="crayon" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="rough"/><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="9" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.45" result="grainMask"/><feComposite in="rough" in2="grainMask" operator="in"/></filter></defs></svg>
+    <svg class="wk-rule" aria-hidden="true" viewBox="0 0 1120 16" preserveAspectRatio="none"><path d="M2 9 C 120 3, 240 14, 360 8 S 600 2, 720 9 S 960 15, 1118 7" fill="none" stroke="#1D2340" stroke-width="1.5" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+    <p class="wk-eyebrow">Toolkit</p>
+    <h2 id="wk-tools" class="wk-tools-title">What I work with</h2>
+    <div class="wk-tools">
+
+      <div class="wk-tool-card wk-tool-card--design">
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56" fill="none" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#crayon)"><path d="M10 30 C 8 16, 22 6, 34 9 C 48 12, 52 28, 44 40 C 36 52, 14 50, 10 30 Z" fill="#F0A37C"/><path d="M28 9 L39 27 L28 47 L17 27 Z" fill="#FBF4E6" stroke="#1D2340" stroke-width="2.4"/><path d="M28 29 V47" stroke="#1D2340" stroke-width="2"/><circle cx="28" cy="26" r="3" fill="#1D2340"/></g></svg>
+        <h3 class="wk-tool-label">Design</h3>
+        <ul class="wk-chips">
+          <li>Figma</li>
+          <li>Adobe XD</li>
+        </ul>
+      </div>
+
+      <div class="wk-tool-card wk-tool-card--planning">
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56" fill="none" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#crayon)"><path d="M8 26 C 10 12, 26 6, 38 10 C 50 15, 50 32, 42 42 C 32 52, 12 46, 8 26 Z" fill="#9CC28A"/><rect x="11" y="13" width="34" height="30" rx="4" fill="#FBF4E6" stroke="#1D2340" stroke-width="2.4"/><path d="M22.5 13 V43" stroke="#1D2340" stroke-width="2"/><path d="M33.5 13 V43" stroke="#1D2340" stroke-width="2"/><rect x="14" y="18" width="6" height="5" rx="1" fill="#1D2340"/><rect x="25" y="18" width="6" height="5" rx="1" fill="#1D2340"/><rect x="25" y="26" width="6" height="5" rx="1" fill="#1D2340"/><rect x="36" y="18" width="6" height="5" rx="1" fill="#1D2340"/></g></svg>
+        <h3 class="wk-tool-label">Planning &amp; delivery</h3>
+        <ul class="wk-chips">
+          <li>Jira</li>
+          <li>imgix</li>
+        </ul>
+      </div>
+
+      <div class="wk-tool-card wk-tool-card--ai">
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56" fill="none" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#crayon)"><path d="M12 22 C 16 8, 36 6, 44 16 C 52 26, 48 44, 34 48 C 20 52, 8 38, 12 22 Z" fill="#A9A3E0"/><path d="M26 10 C 27 20, 30 23, 40 24 C 30 25, 27 28, 26 38 C 25 28, 22 25, 12 24 C 22 23, 25 20, 26 10 Z" fill="#FBF4E6" stroke="#1D2340" stroke-width="2.4"/><path d="M41 34 C 41.5 38, 43 39.5, 47 40 C 43 40.5, 41.5 42, 41 46 C 40.5 42, 39 40.5, 35 40 C 39 39.5, 40.5 38, 41 34 Z" fill="#FBF4E6" stroke="#1D2340" stroke-width="2"/></g></svg>
+        <h3 class="wk-tool-label">AI</h3>
+        <ul class="wk-chips">
+          <li>Claude</li>
+          <li>ChatGPT</li>
+        </ul>
+      </div>
+
+      <div class="wk-tool-card wk-tool-card--code">
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 56 56" fill="none" stroke-linecap="round" stroke-linejoin="round"><g filter="url(#crayon)"><path d="M9 32 C 6 18, 18 8, 30 8 C 44 8, 52 22, 48 36 C 44 48, 26 52, 9 32 Z" fill="#8DB5E8"/><path d="M19 18 L9 28 L19 38" stroke="#1D2340" stroke-width="2.8"/><path d="M37 18 L47 28 L37 38" stroke="#1D2340" stroke-width="2.8"/><path d="M31 14 L25 42" stroke="#1D2340" stroke-width="2.8"/></g></svg>
+        <h3 class="wk-tool-label">Code</h3>
+        <ul class="wk-chips">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about" class="wk-wrap wk-about-wrap" aria-labelledby="wk-about">
+    <div class="wk-about">
+      <div class="wk-about-col wk-about-col--title">
+        <p class="wk-eyebrow">About me</p>
+        <h2 id="wk-about" class="wk-about-title">Designing high-traffic, bilingual digital platforms for government, fintech, and enterprise products.</h2>
+      </div>
+      <div class="wk-about-col wk-about-col--text">
+        <p class="wk-about-text">I specialize in multilingual (Arabic/English) interfaces, clean information architecture, and responsive, accessibility-first design. With a background in development, I bridge usability and aesthetics to create practical, scalable solutions that work in real-world environments.</p>
+        <div class="wk-cta-actions">
+          <a class="wk-btn wk-btn--primary" href="mailto:uxarshi@gmail.com">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Email me
+          </a>
+          <a class="wk-btn wk-btn--secondary" href="https://www.linkedin.com/in/ashayesta/">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wk-footer-art ft-sky">
+  <div class="ft-balloons" aria-hidden="true">
+    <img class="ft-balloon ft-1" src="assets/balloons/h4.webp" alt="" loading="lazy">
+    <img class="ft-balloon ft-2" src="assets/balloons/h6.webp" alt="" loading="lazy">
+    <img class="ft-balloon ft-3 ft-flip" src="assets/balloons/h2.webp" alt="" loading="lazy">
+    <img class="ft-balloon ft-4" src="assets/balloons/h3.webp" alt="" loading="lazy">
+    <img class="ft-balloon ft-5" src="assets/balloons/b1.webp" alt="" loading="lazy">
+    <img class="ft-balloon ft-6" src="assets/balloons/h5.webp" alt="" loading="lazy">
+    <img class="ft-balloon ft-7" src="assets/balloons/h2.webp" alt="" loading="lazy">
+    <img class="ft-balloon ft-8 ft-flip" src="assets/balloons/b6.webp" alt="" loading="lazy">
+    <img class="ft-balloon ft-9 ft-flip" src="assets/balloons/h5.webp" alt="" loading="lazy">
+  </div>
+  <img src="assets/footer-landscape.webp" alt="Painted landscape of a rocky valley at sunset: cone-shaped rock formations, a hillside village with a minaret and cypress trees, and purple hills in the distance." loading="lazy">
+  <div class="wk-footer-pills">
+    <p class="wk-pill">© 2026 Arshi Shayesta</p>
+    <a class="wk-btn wk-pill" href="#top">
+      Back to top
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>
+    </a>
+  </div>
+</footer>
+
+</div>
+<script src="main.js"></script>
+<script src="hero-scene.js"></script>
+<script src="ambience.js"></script>
+</body>
 </html>
