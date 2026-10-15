@@ -1,11 +1,11 @@
 :root {
   --ink: #1D2340;
   --ink-soft: #4B5068;
-  --paper: #FBF4E6;
+  --paper: #FDF9F1;
   --sunset: #E9B88A;
   --accent: #3D52A0;
   --ember: #D2603A;
-  --page: #F6ECDA;
+  --page: #FAF4E8;
   --wave: 44px;          /* the hero's curved bottom edge, just below the fold */
   --fade: 600ms ease;
 }
@@ -227,6 +227,30 @@ a:hover { color: var(--accent); }
   box-shadow: 0 28px 56px -24px rgba(45, 30, 15, 0.5);
   transition: opacity var(--fade), visibility var(--fade);
 }
+
+/* Icon-only sound toggle in the card's top-right corner (mirrors the header one) */
+.hp-card-sound {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color .2s, color .2s;
+}
+.hp-card-sound:hover { background: rgba(29, 35, 64, 0.08); }
+.hp-card-sound[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+.hp-card-sound:focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; }
+.hp-card-sound .hp-sound-on { display: none; }
+.hp-card-sound[aria-pressed="true"] .hp-sound-on { display: block; }
+.hp-card-sound[aria-pressed="true"] .hp-sound-off { display: none; }
 
 .hp-card-wave {
   display: none;
@@ -958,6 +982,8 @@ a:hover { color: var(--accent); }
   .hp-wave { display: none; }   /* the bottom sheet runs on into the page */
   .hp-handle { display: flex; }
   .hp-card.is-collapsed .hp-intro { display: none; }
+  .hp-card-sound { top: 52px; right: 20px; }
+  .hp-card.is-collapsed .hp-card-sound { display: none; }
   .hp-h1 { font-size: 38px; }
   .hp-lede { font-size: 16px; margin: 10px 0 20px; }
   .hp-choices { gap: 10px; }
