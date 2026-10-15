@@ -10,6 +10,7 @@
   const walkControl = hero.querySelector('[data-walk-control]');
   const soundToggle = document.querySelector('[data-sound-toggle]');
   const soundLabel = soundToggle.querySelector('.hp-sound-label');
+  const soundMirror = document.querySelector('[data-sound-mirror]');
   const card = hero.querySelector('.hp-card');
   const introToggle = hero.querySelector('[data-intro-toggle]');
   const work = document.getElementById('work');
@@ -24,10 +25,17 @@
     soundToggle.setAttribute('aria-pressed', String(on));
     soundToggle.setAttribute('aria-label', on ? 'Sound on' : 'Sound off');
     soundLabel.textContent = on ? 'Sound on' : 'Sound off';
+    if (soundMirror) {
+      soundMirror.setAttribute('aria-pressed', String(on));
+      soundMirror.setAttribute('aria-label', on ? 'Sound on' : 'Sound off');
+    }
     video.muted = !on;
   }
 
   soundToggle.addEventListener('click', () => setSound(!soundOn));
+  // The intro card's icon-only button drives the header toggle, so the
+  // birdsong and every other listener on that toggle stay in sync.
+  if (soundMirror) soundMirror.addEventListener('click', () => soundToggle.click());
   setSound(false);
 
   // ---------- Arriving at Selected work ----------
