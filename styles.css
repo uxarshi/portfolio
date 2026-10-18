@@ -833,24 +833,28 @@ a:hover { color: var(--accent); }
   font-weight: 700;
 }
 
-.wk-chips {
+/* Tools as icon + name rows */
+.wk-tool-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.wk-chips li {
-  display: inline-flex;
+.wk-tool-list li {
+  display: flex;
   align-items: center;
-  height: 34px;
-  padding: 0 14px;
-  background: var(--chip);
-  border: 1.5px solid var(--ink);
-  border-radius: 999px;
-  font-size: 15px;
+  gap: 12px;
+  font-size: 16px;
   font-weight: 600;
+}
+.wk-tool-list img {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1.5px var(--ink);
 }
 
 .wk-about {
