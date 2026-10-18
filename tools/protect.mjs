@@ -122,8 +122,25 @@ button:focus-visible{outline:3px solid #D2603A;outline-offset:3px}
       return new TextDecoder().decode(buf);
     });
   }
+  // Swap the lock screen for the case study in place. (document.write is
+  // unreliable here: some browsers, e.g. Brave, append instead of replacing.)
   function show(html) {
-    document.open(); document.write(html); document.close();
+    function swap() {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var root = document.importNode(doc.documentElement, true);
+      document.replaceChild(root, document.documentElement);
+      // Imported scripts don't run; recreate them so they execute in order.
+      Array.prototype.forEach.call(root.querySelectorAll('script'), function (old) {
+        var s = document.createElement('script');
+        Array.prototype.forEach.call(old.attributes, function (a) { s.setAttribute(a.name, a.value); });
+        s.text = old.textContent;
+        old.parentNode.replaceChild(s, old);
+      });
+      window.scrollTo(0, 0);
+      if (location.hash) { var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', swap, { once: true });
+    else swap();
   }
   function count() {
     try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'case-study-1-unlocked', title: 'Case study 1 (unlocked)', event: true }); } catch (e) {}
