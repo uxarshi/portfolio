@@ -237,6 +237,7 @@ def main():
         hole |= cv2.dilate(m, np.ones((3, 3), np.uint8), iterations=grow)
     plate = lama_fill(img, hole)
     cv2.imwrite(str(OUT / "plate.jpg"), plate, [cv2.IMWRITE_JPEG_QUALITY, 90])
+    cv2.imwrite(str(OUT / "plate.webp"), plate, [cv2.IMWRITE_WEBP_QUALITY, 88])  # what the page loads
 
     scene = {"size": [W, H], "sprites": [], "lamps": [{"x": x, "y": y, "r": s} for x, y, s in LAMPS],
              "water": save_water(img)}

@@ -169,7 +169,7 @@
     const res = await fetch('assets/hero/scene.json');
     scene = await res.json();
     [W, H] = scene.size;
-    plate = texture(await loadImage('assets/hero/plate.jpg'));
+    plate = texture(await loadImage('assets/hero/plate.webp'));
     waterMap = texture(await loadImage(scene.water.map));
     sprites = await Promise.all(scene.sprites.map(async (s, i) => {
       const [img, map] = await Promise.all([
