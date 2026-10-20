@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+# Working files, not pages for visitors
+Disallow: /source/
+Disallow: /tools/
+Disallow: /new%20images/
+Disallow: /Portfolio%20Homepage.html
+Disallow: /Portfolio%20Homepage2.html
+
+Sitemap: https://uxarshi.com/sitemap.xml

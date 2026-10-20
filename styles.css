@@ -300,6 +300,11 @@ a:hover { color: var(--accent); }
   letter-spacing: -0.025em;
   color: var(--ink);
 }
+/* The job title sits inside the h1 (for search engines) but keeps the eyebrow look */
+.hp-h1 .hp-eyebrow {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  line-height: 1.4;
+}
 
 .hp-lede {
   margin: 14px 0 26px;
@@ -688,6 +693,8 @@ a:hover { color: var(--accent); }
   box-shadow: 0 26px 44px -26px rgba(45, 30, 15, 0.6);
 }
 .wk-card:hover .wk-cta-text { text-decoration: underline; text-underline-offset: 4px; }
+.wk-card--soon { cursor: default; }
+.wk-card--soon:hover { transform: none; box-shadow: 0 20px 40px -28px rgba(45, 30, 15, 0.55); }
 .wk-card--1 { border-radius: 26px 22px 28px 24px / 24px 28px 22px 26px; }
 .wk-card--2 { border-radius: 22px 28px 24px 26px / 28px 22px 26px 24px; }
 .wk-card--3 { border-radius: 24px 26px 22px 28px / 26px 24px 28px 22px; }
