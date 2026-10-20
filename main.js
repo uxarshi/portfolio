@@ -96,6 +96,69 @@
 
   let state = 'idle';   // idle | walking | cta | pressing | zooming
 
+  // ---------- Framing on narrow screens ----------
+
+  // On a portrait phone only a tall slice of the 16:9 video fits. Each shot
+  // gets one steady framing that keeps her in view, and the frame jumps at
+  // the cuts, like an edit; the only move is one slow drift in the opening
+  // walk, from where the still is framed. Where the whole frame fits
+  // (desktop) the pan clamps to zero and nothing moves.
+  // [time s, x of the framing centre in video px]; a new shot starts at each CUTS time.
+  const FOCUS = [
+    [0, 1066], [2.93, 1130],     // walk: slow drift as she crosses the promenade
+    [2.94, 1120], [9.5, 1120],   // bench, glasses, laptop out
+    [9.55, 962], [11.3, 962],    // laptop
+    [11.32, 1085], [13.3, 1085], // close-up
+    [13.32, 960], [16, 960],     // laptop, ends on the screen
+  ];
+  const CUTS = [2.935, 9.54, 11.31, 13.31];
+  const FRAME_W = 1920;
+  let panX = null, panRaf = 0, panLast = 0, panShot = -1;
+  let startX = FOCUS[0][1];   // where the still is framed on this screen, so the fade-in doesn't jump
+
+  function shotOf(t) { let i = 0; while (i < CUTS.length && t >= CUTS[i]) i++; return i; }
+  function focusAt(t) {
+    const shot = shotOf(t);
+    const keys = FOCUS.filter(([kt]) => shotOf(kt) === shot).map((k, i) => (shot === 0 && i === 0 ? [k[0], startX] : k));
+    if (t <= keys[0][0]) return keys[0][1];
+    for (let i = 1; i < keys.length; i++) {
+      const [t0, x0] = keys[i - 1], [t1, x1] = keys[i];
+      if (t <= t1) { const k = (t - t0) / (t1 - t0); return x0 + (x1 - x0) * (k * k * (3 - 2 * k)); }
+    }
+    return keys[keys.length - 1][1];
+  }
+  function applyPan(x) {
+    const fw = frame.offsetWidth, vw = walk.clientWidth;
+    const room = Math.max(0, (fw - vw) / 2);
+    const dx = Math.max(-room, Math.min(room, (0.5 - x / FRAME_W) * fw));
+    frame.style.transform = `translate(calc(-50% + ${dx.toFixed(1)}px), -50%)`;
+  }
+  function panTick(now) {
+    const t = video.currentTime, shot = shotOf(t), target = focusAt(t);
+    const dt = Math.min(0.1, (now - panLast) / 1000 || 0);
+    panLast = now;
+    // Ease towards the target; snap on a cut, a seek, or with reduced motion.
+    const jump = panX === null || shot !== panShot || Math.abs(target - panX) > 160 || reducedMotion.matches;
+    panX = jump ? target : panX + (target - panX) * (1 - Math.exp(-dt / 0.25));
+    panShot = shot;
+    applyPan(panX);
+    const settled = video.paused && Math.abs(target - panX) < 0.5;
+    if ((state === 'walking' || state === 'cta') && !settled) panRaf = requestAnimationFrame(panTick);
+  }
+  function startPan() {
+    const stage = hero.querySelector('.hp-stage').getBoundingClientRect();
+    const box = walk.getBoundingClientRect();
+    startX = ((box.left + box.width / 2 - stage.left) / stage.width) * FRAME_W;
+    cancelAnimationFrame(panRaf); panX = null; panShot = -1; panLast = performance.now(); panTick(panLast);
+  }
+  function stopPan() { cancelAnimationFrame(panRaf); panX = null; frame.style.transform = ''; }
+  window.addEventListener('resize', () => { if (panX !== null) applyPan(panX); });
+  video.addEventListener('play', () => {
+    if (state !== 'walking') return;
+    cancelAnimationFrame(panRaf); panLast = performance.now(); panRaf = requestAnimationFrame(panTick);
+  });
+  video.addEventListener('seeked', () => { if (state === 'walking' || state === 'cta') { panX = null; panTick(performance.now()); } });
+
   function startWalk() {
     window.scrollTo({ top: 0, behavior: 'instant' });
     state = 'walking';
@@ -103,6 +166,7 @@
     walk.setAttribute('aria-hidden', 'false');
     video.currentTime = 0;
     video.muted = !soundOn;
+    startPan();
 
     // play() must run inside the tap handler so mobile browsers allow it.
     video.play().catch(() => {
@@ -142,6 +206,7 @@
     walk.setAttribute('aria-hidden', 'true');
     walkControl.textContent = 'Skip';
     showProjects.tabIndex = -1;
+    stopPan();
   }
 
   // ---------- Show projects ----------

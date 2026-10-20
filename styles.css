@@ -965,13 +965,10 @@ a:hover { color: var(--accent); }
   .hp-sound-label { display: none; }
   .hp-sound { padding: 0; }
 
-  /* The video starts framed exactly like the still, then eases back to centre. */
+  /* The still is framed on her; during the walk main.js pans the video frame
+     to follow the action (it starts on this same framing). */
   .hp-stage,
   .hp-walk-frame { transform: translate(-55.5%, -50%); }
-  .is-playing .hp-walk-frame {
-    transform: translate(-50%, -50%);
-    transition: transform 3s ease-in-out;
-  }
   .hp-bubble { left: 50.2%; width: 200px; font-size: 21px; padding: 14px 16px; }
 
   .hp-card {
@@ -1034,7 +1031,6 @@ a:hover { color: var(--accent); }
   html { scroll-behavior: auto; }
   .hp-choice, .wk-card, .wk-btn { transition: none; }
   .hp-choice:hover, .wk-card:hover, .wk-btn:hover { transform: none; }
-  .is-playing .hp-walk-frame { transition: none; }
   .hp-laptop-btn:hover,
   .hp-laptop-btn:focus-visible,
   .hp-hero.is-pressed .hp-laptop-btn,
