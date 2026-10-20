@@ -1036,3 +1036,7 @@ a:hover { color: var(--accent); }
   .hp-hero.is-pressed .hp-laptop-btn,
   .hp-hero.is-pressed .hp-laptop-key { animation: none; transform: none; }
 }
+
+/* Focus moved by the walk after a tap or click: no ring (keyboard users keep it). */
+.is-quiet-focus:focus,
+.is-quiet-focus:focus-visible { outline: none; }

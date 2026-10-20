@@ -16,6 +16,24 @@
   const work = document.getElementById('work');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  // ---------- Focus without a ring for touch and mouse ----------
+
+  // The walk moves focus along (to Skip, the laptop button, then the Work
+  // heading) so keyboard and screen-reader users keep their place. Browsers
+  // draw a focus ring on those programmatic moves even after a tap, so the
+  // ring is only kept when the visitor is actually using the keyboard.
+  let keyboardUser = false;
+  document.addEventListener('keydown', (e) => { if (!e.metaKey && !e.ctrlKey && !e.altKey) keyboardUser = true; }, true);
+  document.addEventListener('pointerdown', () => { keyboardUser = false; }, true);
+  function moveFocus(el) {
+    if (!el) return;
+    if (!keyboardUser) {
+      el.classList.add('is-quiet-focus');
+      el.addEventListener('blur', () => el.classList.remove('is-quiet-focus'), { once: true });
+    }
+    el.focus({ preventScroll: true, focusVisible: keyboardUser });
+  }
+
   // ---------- Sound ----------
 
   let soundOn = false;
@@ -185,7 +203,7 @@
     hero.classList.add('is-cta');
     walkControl.textContent = 'Back to start';
     showProjects.tabIndex = 0;
-    showProjects.focus({ preventScroll: true });
+    moveFocus(showProjects);
   }
 
   function onWalkControl() {
@@ -195,7 +213,7 @@
       arriveAtLaptop();
     } else if (state === 'cta') {
       endWalk();
-      walkStart.focus({ preventScroll: true });
+      moveFocus(walkStart);
     }
   }
 
@@ -335,7 +353,7 @@
     window.scrollTo({ top, behavior: 'instant' });
     history.replaceState(null, '', '#work');
     work.querySelector('h2').setAttribute('tabindex', '-1');
-    work.querySelector('h2').focus({ preventScroll: true });
+    moveFocus(work.querySelector('h2'));
   }
 
   // A static copy of the page as it will look once scrolled to Work, which
@@ -418,7 +436,7 @@
   video.addEventListener('playing', () => {
     if (state === 'idle') return;
     hero.classList.add('is-playing');
-    walkControl.focus({ preventScroll: true });
+    moveFocus(walkControl);
   });
   video.addEventListener('ended', arriveAtLaptop);
   video.addEventListener('error', endWalk);

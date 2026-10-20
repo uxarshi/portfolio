@@ -32,12 +32,22 @@ PREVIEW = ROOT / "private/previews/intro-walk-smooth.mp4"
 # The cuts sit at frames 88, 286, 339 and 399; shots after 286 are left alone.
 # (start, end, ghost limit, fast px): the bench clip (AI generated, then
 # retimed with crossfades) needs a stricter ghost filter and less synthesis.
-SEGMENTS = [(0, 88, 0.32, 14.0), (88, 172, 0.32, 14.0), (172, 286, 0.40, 0.0)]   # 0 = never mix frames
+# fast < 0: real frames only, never synthesised (rigid glasses/laptop bend when warped)
+# The bench shot (172-285, AI generated) is left as in the source: its glasses
+# and laptop are rigid, and both synthesising and skipping its crossfaded
+# frames bent or doubled them (tried, rejected by eye).
+SEGMENTS = [(0, 88, 0.32, 14.0), (88, 172, 0.32, 14.0)]
 SIGMA = 5.0          # frames; how much the pace is smoothed inside a shot
 FLOW_SCALE = 0.5     # optical flow is computed at half resolution
 # Ghosted source frames the detector misses (checked by eye: see-through hands
 # as she lowers them from the glasses).
 EXCLUDE = {222, 223, 225}
+# Moments left exactly as in the source: the laptop is lifted out of the bag
+# too fast and too far between clean frames to synthesise; warping one frame
+# that far bends it. Smoothing eases into and out of these ranges.
+KEEP = []
+KEEP_EASE = 8          # frames
+KEEP_MODE = "source"   # "source": original frames (see-through crossfades) | "hold": nearest clean frame
 FAST = 14.0          # px between clean frames above which no in-between is invented
 FFMPEG = shutil.which("ffmpeg") or "/opt/homebrew/bin/ffmpeg"
 
@@ -158,13 +168,32 @@ def retime(frames, a, b, limit=0.32, fast=None):
     # progress at every original frame position, with ghosts placed between their keys
     p = np.interp(np.arange(n), keys, pk) + np.arange(n) * 1e-4
     q = smooth_progress(p, SIGMA)
+    keep = np.zeros(n)
+    for k0, k1 in KEEP:
+        for j in range(n):
+            g = a + j
+            if k0 <= g < k1:
+                keep[j] = 1
+            elif k0 - KEEP_EASE <= g < k0:
+                keep[j] = max(keep[j], (g - (k0 - KEEP_EASE)) / KEEP_EASE)
+            elif k1 <= g < k1 + KEEP_EASE:
+                keep[j] = max(keep[j], 1 - (g - k1 + 1) / KEEP_EASE)
+    q = (1 - keep) * q + keep * p                             # follow the source's own timing there
     out = []
     for j in range(n):
+        if keep[j] >= 1:
+            if KEEP_MODE == "hold":                           # nearest clean real frame: no ghosts, no bending
+                out.append(seg[min(keys, key=lambda kk: abs(kk - j))])
+            else:
+                out.append(seg[j])                            # the original frame, untouched
+            continue
         x = np.interp(q[j], pk + np.array(keys) * 1e-4, np.arange(len(kf)))   # position among clean keys
         i = min(int(np.floor(x)), len(kf) - 2)
         t = x - i
-        # fast motion: warp a single frame (mixing two would leave ghosts)
-        out.append(between(kf[i], kf[i + 1], fwd[i], bwd[i], t, mix=m[i] <= fast))
+        if fast < 0:                                          # nearest clean real frame
+            out.append(kf[i] if t < 0.5 else kf[i + 1])
+        else:                                                 # fast motion: warp one frame, don't mix
+            out.append(between(kf[i], kf[i + 1], fwd[i], bwd[i], t, mix=m[i] <= fast))
     out[0] = seg[0]                                           # first frame of the shot stays exact
     before = np.std(np.diff(p)) / max(np.mean(np.diff(p)), 1e-6)
     print(f"  frames {a}-{b - 1}: {len(ghosts)} blended source frames skipped, "
@@ -215,9 +244,9 @@ def encode(frames, dst, fps="30000/1001"):
     proc = subprocess.Popen([
         FFMPEG, "-v", "error", "-y",
         "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{w}x{h}", "-r", fps, "-i", "-",
-        "-i", str(BASE), "-map", "0:v", "-map", "1:a?",
+        "-i", str(MASTER if MASTER.exists() else BASE), "-map", "0:v", "-map", "1:a?",
         "-c:v", "libx264", "-preset", "slow", "-crf", "23", "-profile:v", "high", "-pix_fmt", "yuv420p",
-        "-c:a", "copy", "-movflags", "+faststart", "-shortest", str(dst)], stdin=subprocess.PIPE)
+        "-c:a", "aac", "-b:a", "96k", "-movflags", "+faststart", str(dst)], stdin=subprocess.PIPE)
     for f in frames:
         proc.stdin.write(f.tobytes())
     proc.stdin.close()
@@ -228,7 +257,10 @@ def encode(frames, dst, fps="30000/1001"):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true", help="replace the live video with the result")
+    ap.add_argument("--keep-mode", choices=["source", "hold"], default=KEEP_MODE)
+    ap.add_argument("--out", default=str(PREVIEW))
     args = ap.parse_args()
+    globals().update(KEEP_MODE=args.keep_mode, PREVIEW=Path(args.out))
     src = MASTER if MASTER.exists() else (BACKUP if BACKUP.exists() else BASE)
     print("reading", src.relative_to(ROOT))
     frames = read_frames(src)
@@ -239,7 +271,7 @@ def main():
     for a, b, limit, fast in SEGMENTS:
         out[a:b] = retime(frames, a, b, limit, fast)
     encode(out, PREVIEW)
-    print("preview:", PREVIEW.relative_to(ROOT))
+    print("preview:", PREVIEW)
     if args.apply:
         if not BACKUP.exists():
             BACKUP.parent.mkdir(parents=True, exist_ok=True)
