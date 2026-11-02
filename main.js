@@ -116,34 +116,29 @@
 
   // ---------- Framing on narrow screens ----------
 
-  // On a portrait phone only a tall slice of the 16:9 video fits. Each shot
-  // gets one steady framing that keeps her in view, and the frame jumps at
-  // the cuts, like an edit; the only move is one slow drift in the opening
-  // walk, from where the still is framed. Where the whole frame fits
-  // (desktop) the pan clamps to zero and nothing moves.
-  // [time s, x of the framing centre in video px]; a new shot starts at each CUTS time.
-  const FOCUS = [
-    [0, 1066], [2.93, 1130],     // walk: slow drift as she crosses the promenade
-    [2.94, 1120], [9.5, 1120],   // bench, glasses, laptop out
-    [9.55, 962], [11.3, 962],    // laptop
-    [11.32, 1085], [13.3, 1085], // close-up
-    [13.32, 960], [16, 960],     // laptop, ends on the screen
-  ];
-  const CUTS = [2.935, 9.54, 11.31, 13.31];
+  // On a portrait phone only a tall slice of the 16:9 video fits -- about a
+  // quarter of its width. The frame holds ONE steady framing for the whole
+  // film, so the shot changes are nothing but the video's own cuts: no
+  // sideways move at a cut, ever. The single move is a slow settle during the
+  // opening walk, from wherever the still is framed on this screen (so the
+  // video fades in without a jump) onto that steady framing, finishing before
+  // the first cut (2.94 s). Where the whole frame fits (desktop) the pan clamps to
+  // zero and nothing moves at all.
+  //
+  // STEADY is a compromise every shot has to live with: far enough left that
+  // the "Show projects" button on the laptop screen (video px 779-1138) stays
+  // fully inside the ~474 px a phone sees, far enough right to keep her in
+  // shot on the bench and in the close-up. Re-check both if it is changed.
+  const STEADY = 980;
+  const SETTLE = 2.7;         // seconds; the walk ends at 2.94
   const FRAME_W = 1920;
-  let panX = null, panRaf = 0, panLast = 0, panShot = -1;
-  let startX = FOCUS[0][1];   // where the still is framed on this screen, so the fade-in doesn't jump
+  let panX = null, panRaf = 0;
+  let startX = 1066;          // where the still is framed, measured in startPan()
 
-  function shotOf(t) { let i = 0; while (i < CUTS.length && t >= CUTS[i]) i++; return i; }
   function focusAt(t) {
-    const shot = shotOf(t);
-    const keys = FOCUS.filter(([kt]) => shotOf(kt) === shot).map((k, i) => (shot === 0 && i === 0 ? [k[0], startX] : k));
-    if (t <= keys[0][0]) return keys[0][1];
-    for (let i = 1; i < keys.length; i++) {
-      const [t0, x0] = keys[i - 1], [t1, x1] = keys[i];
-      if (t <= t1) { const k = (t - t0) / (t1 - t0); return x0 + (x1 - x0) * (k * k * (3 - 2 * k)); }
-    }
-    return keys[keys.length - 1][1];
+    if (t >= SETTLE) return STEADY;
+    const k = t / SETTLE, e = k * k * (3 - 2 * k);
+    return startX + (STEADY - startX) * e;
   }
   function applyPan(x) {
     const fw = frame.offsetWidth, vw = walk.clientWidth;
@@ -151,29 +146,27 @@
     const dx = Math.max(-room, Math.min(room, (0.5 - x / FRAME_W) * fw));
     frame.style.transform = `translate(calc(-50% + ${dx.toFixed(1)}px), -50%)`;
   }
-  function panTick(now) {
-    const t = video.currentTime, shot = shotOf(t), target = focusAt(t);
-    const dt = Math.min(0.1, (now - panLast) / 1000 || 0);
-    panLast = now;
-    // Ease towards the target; snap on a cut, a seek, or with reduced motion.
-    const jump = panX === null || shot !== panShot || Math.abs(target - panX) > 160 || reducedMotion.matches;
-    panX = jump ? target : panX + (target - panX) * (1 - Math.exp(-dt / 0.25));
-    panShot = shot;
+  function panTick() {
+    // focusAt is already a smooth curve, so follow it exactly -- no easing to
+    // lag behind it. Reduced motion skips the settle and sits on the steady
+    // framing from the start; the fade from the still covers the difference.
+    panX = reducedMotion.matches ? STEADY : focusAt(video.currentTime);
     applyPan(panX);
-    const settled = video.paused && Math.abs(target - panX) < 0.5;
+    // Nothing can change while it is paused, so let the loop stop.
+    const settled = video.paused;
     if ((state === 'walking' || state === 'cta') && !settled) panRaf = requestAnimationFrame(panTick);
   }
   function startPan() {
     const stage = hero.querySelector('.hp-stage').getBoundingClientRect();
     const box = walk.getBoundingClientRect();
     startX = ((box.left + box.width / 2 - stage.left) / stage.width) * FRAME_W;
-    cancelAnimationFrame(panRaf); panX = null; panShot = -1; panLast = performance.now(); panTick(panLast);
+    cancelAnimationFrame(panRaf); panX = null; panTick();
   }
   function stopPan() { cancelAnimationFrame(panRaf); panX = null; frame.style.transform = ''; }
   window.addEventListener('resize', () => { if (panX !== null) applyPan(panX); });
   video.addEventListener('play', () => {
     if (state !== 'walking') return;
-    cancelAnimationFrame(panRaf); panLast = performance.now(); panRaf = requestAnimationFrame(panTick);
+    cancelAnimationFrame(panRaf); panRaf = requestAnimationFrame(panTick);
   });
   video.addEventListener('seeked', () => { if (state === 'walking' || state === 'cta') { panX = null; panTick(performance.now()); } });
 
